@@ -22,15 +22,12 @@ public class Creator {
     @Value("${virtual.node}")
     private String node;
 
-    @Value("${db.name}")
-    private String dbName;
-
     private String backendUrl = "http://localhost:8080/registry";
 
     @PostConstruct
     public void creatorChain() {
-        log.info("Rest request in params: HOST = {} and NODE = {} and DB_NAME = {}",
-                this.host, this.node, this.dbName);
+        log.info("Rest request in params: HOST = {} and NODE = {}",
+                this.host, this.node);
         RestTemplate rest = new RestTemplate();
         CreatorDto creatorDto = new CreatorDto();
         creatorDto.host = this.host;

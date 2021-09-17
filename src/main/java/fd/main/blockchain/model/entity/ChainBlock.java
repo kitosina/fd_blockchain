@@ -1,8 +1,13 @@
 package fd.main.blockchain.model.entity;
 
+import fd.main.blockchain.model.Hashing;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -10,12 +15,17 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Data
+import static fd.main.blockchain.model.Hashing.SHA256;
+
+@Setter
+@ToString
+@Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "chain", schema = "chain_schema")
-public class Chain {
+@Table(name = "chain")
+public class ChainBlock {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -23,10 +33,10 @@ public class Chain {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "transactionalId", updatable = false, nullable = false)
+    @Column(name = "transactionId", updatable = false, nullable = false)
     private UUID transactionalId;
 
-    private String conasmgmentId;//Json properti как id
+    private String conasamentId;//Json properti как id
 
     @Column(name = "company_from")
     private String from;//id
@@ -48,6 +58,11 @@ public class Chain {
 
     @Column
     private String hash;
+
+    public ChainBlock calculateHash() {
+        this.hash = SHA256(toString());
+        return this;
+    }
 
 
 }
