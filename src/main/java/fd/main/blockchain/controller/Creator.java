@@ -19,21 +19,25 @@ public class Creator {
     @Value("${virtual.host}")
     private String host;
 
-    @Value("${virtual.node}")
+    @Value("${NODE_NAME}")
     private String node;
 
-    private String backendUrl = "http://localhost:8080/registry";
+    @Value("${coordinator.url")
+    private String backendUrl;
 
     @PostConstruct
     public void creatorChain() {
-        log.info("Rest request in params: HOST = {} and NODE = {}",
-                this.host, this.node);
-        RestTemplate rest = new RestTemplate();
-        CreatorDto creatorDto = new CreatorDto();
-        creatorDto.host = this.host;
-        creatorDto.nodeName = this.node;
-        rest.postForObject(backendUrl, creatorDto, Object.class);
-
+        try {
+            log.info("Rest request in params: HOST = {} and NODE = {}",
+                    this.host, this.node);
+            RestTemplate rest = new RestTemplate();
+            CreatorDto creatorDto = new CreatorDto();
+            creatorDto.host = this.host;
+            creatorDto.nodeName = this.node;
+            rest.postForObject("http://blockchain.core.borisof.ru/registry/", creatorDto, Object.class);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Data

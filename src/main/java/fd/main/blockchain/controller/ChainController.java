@@ -5,7 +5,6 @@ import fd.main.blockchain.model.entity.ChainBlock;
 import fd.main.blockchain.service.ChainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +33,9 @@ public class ChainController {
     }
 
     @GetMapping("")
-    public Collection<ChainBlock> getAllBlocks(){
-        return service.getAll();
+    public ResponseEntity<Collection<ChainBlock>> getAllBlocks(){
+        return ResponseEntity.ok()
+                .body(service.getAll());
     }
 
 }
