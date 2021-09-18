@@ -45,6 +45,6 @@ public class ChainService {
     }
 
     public Collection<ChainBlock> getAll(){
-        return repo.findAll();
+        return repo.findAllBlocks();
     }
 }
